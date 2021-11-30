@@ -10,7 +10,6 @@ public class MotionMatchingEditor : ModuleRules
 
         PublicIncludePaths.AddRange(
 			new string[] {
-                "MotionMatchingEditor/Public"
 				// ... add public include paths required here ...
 			}
 			);
@@ -18,7 +17,6 @@ public class MotionMatchingEditor : ModuleRules
 		
 		PrivateIncludePaths.AddRange(
 			new string[] {
-                "MotionMatchingEditor/Private",
 				// ... add other private include paths required here ...
 			}
 			);
@@ -62,16 +60,15 @@ public class MotionMatchingEditor : ModuleRules
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
-
-
+        
         PrivateIncludePathModuleNames.AddRange(
-       new string[] {
+            new string[] {
                 "Settings",
                 "IntroTutorials",
                 "AssetTools",
                 "LevelEditor"
-       }
-   );
+            }
+            );
 
         DynamicallyLoadedModuleNames.AddRange(
             new string[] {

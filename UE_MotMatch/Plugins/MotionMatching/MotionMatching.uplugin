@@ -18,15 +18,15 @@
 		{
 			"Name": "MotionMatching",
 			"Type": "Runtime",
-			"LoadingPhase": "PreDefault",
+			"LoadingPhase": "Default",
 			"BlacklistPlatforms": [
 				"IOS"
 			]
 		},
 		{
 			"Name": "MotionMatchingEditor",
-			"Type": "Editor",
-			"LoadingPhase": "PreDefault",
+			"Type": "UncookedOnly",
+			"LoadingPhase": "Default",
 			"BlacklistPlatforms": [
 				"IOS"
 			]

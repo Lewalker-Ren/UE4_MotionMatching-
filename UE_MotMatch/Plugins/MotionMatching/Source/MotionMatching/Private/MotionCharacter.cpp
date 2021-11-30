@@ -47,7 +47,6 @@ AMotionCharacter::AMotionCharacter()
 
 }
 
-
 void AMotionCharacter::OnNewMotionKey_Implementation(int32 WinnerIndex, float Cost)
 {
 }
@@ -76,6 +75,7 @@ void AMotionCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 }
 
+#if WITH_EDITOR
 void AMotionCharacter::PostEditChangeProperty(FPropertyChangedEvent & PropertyChangedEvent)
 {
 	//Get all of our components  
@@ -95,6 +95,7 @@ void AMotionCharacter::PostEditChangeProperty(FPropertyChangedEvent & PropertyCh
 	// Call the base class version  
 	Super::PostEditChangeProperty(PropertyChangedEvent);
 }
+#endif
 
 void AMotionCharacter::PostMotionFieldChanged()
 {
@@ -113,7 +114,6 @@ void AMotionCharacter::PostMotionFieldChanged()
 		}
 	}
 }
-
 
 void AMotionCharacter::MotionUpdate(const float DT)
 {

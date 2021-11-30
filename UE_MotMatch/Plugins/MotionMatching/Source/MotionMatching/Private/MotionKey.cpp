@@ -17,7 +17,6 @@ FMotionKey::FMotionKey()
 	MotionJointData.Empty();
 	
 	SrcAnimationName = NAME_None;
-
 }
 
 float FMotionKey::ComputeMotionKeyCost(const float Responsiveness, const float VelocityStrength, const float PoseStrength, const FTrajectoryData DesiredTrajectory, const TArray <FJointData> PresentJointData, const FVector InPresentVel)

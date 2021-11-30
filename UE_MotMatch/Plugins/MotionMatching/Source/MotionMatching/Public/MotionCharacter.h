@@ -25,29 +25,32 @@ public:
 	AMotionCharacter();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MotionMatching")
-		UMotionField* MotionField;
+	UMotionField* MotionField;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MotionMatchingAnimSettings")
-		float PlayRate;
+	float PlayRate;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MotionMatchingAnimSettings")
-		float BlendTime;
+	float BlendTime;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MotionMatchingCompute")
-		float Responsiveness;
+	float Responsiveness;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MotionMatchingCompute")
-		float VelocityStrength;
+	float VelocityStrength;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MotionMatchingCompute")
-		float PoseStrength;
+	float PoseStrength;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MotionMatchingMontage")
-		FName SlotName;
+	FName SlotName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MotionMatchingDebug")
-		bool DrawDebug;
+	bool DrawDebug;
 
 	/** Event fired when the character changes to a New Motion Key */
 	UFUNCTION(BlueprintNativeEvent, Category = "Pawn|Character")
-		void OnNewMotionKey(const int32 WinnerIndex, const float Cost);
+	void OnNewMotionKey(const int32 WinnerIndex, const float Cost);
 	virtual void OnNewMotionKey_Implementation(const int32 WinnerIndex, const float Cost);
 
 protected:
@@ -68,26 +71,28 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "MotionMatching")
-		FTrajectoryData GetDesiredTrajectory()
+	FTrajectoryData GetDesiredTrajectory()
 	{
 		return DesiredTrajectory;
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "MotionMatching")
-		void SetDesiredTrajectory(const FTrajectoryData NewDesiredTrajectory)
+	void SetDesiredTrajectory(const FTrajectoryData NewDesiredTrajectory)
 	{
-	    DesiredTrajectory = NewDesiredTrajectory;
+		DesiredTrajectory = NewDesiredTrajectory;
 	}
 
-
+#if WITH_EDITOR
 	virtual void PostEditChangeProperty(FPropertyChangedEvent & PropertyChangedEvent) override;
+#endif
 
 private:
 
 	UPROPERTY()
-		int CurrentAnimIndex;
+	int CurrentAnimIndex;
+
 	UPROPERTY()
-		float CurrentAnimTime;
+	float CurrentAnimTime;
 
 	UPROPERTY()
 	int32 MotionKeyIndex;
@@ -97,11 +102,11 @@ private:
 	
 	////////////////////////////////////////// Motion DATA
 	UPROPERTY()
-		TArray <FJointData> JointsData;
-	UPROPERTY()
-		FVector Vel;
-	//////////////////////////////////////////
+	TArray <FJointData> JointsData;
 
+	UPROPERTY()
+	FVector Vel;
+	//////////////////////////////////////////
 
 	void PostMotionFieldChanged();
 

@@ -1,5 +1,3 @@
-
-
 #pragma once
 #include "AnimGraphNode_Base.h"
 #include "AnimNode_MotionField.h"
@@ -12,8 +10,9 @@ UCLASS()
 class MOTIONMATCHINGEDITOR_API UAnimGraphNode_MotionField : public UAnimGraphNode_Base
 {
 	GENERATED_BODY()
+
 	UPROPERTY(EditAnywhere, Category = Settings)
-		FAnimNode_MotionField Node;
+	FAnimNode_MotionField Node;
 
 	//~ Begin UEdGraphNode Interface.
 	virtual FLinearColor GetNodeTitleColor() const override;

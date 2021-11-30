@@ -2,16 +2,12 @@
 
 #include "MyBlueprintFunctionLibrary.h"
 #include "MotionField.h"
+#include "FrameRate.h"
+#include "Animation/AnimSequence.h"
 
 void UMyBlueprintFunctionLibrary::PoseGetTest(const UAnimSequence * InSequence, const float AtTime, const bool bExtractRootMotion, TArray<FTransform>& OutBoneTransforms)
 {
 	OutBoneTransforms.Empty();
-	/*
-	FCompactPose CmpPose = FCompactPose();
-	FBlendedCurve BldCurve = FBlendedCurve();
-	FAnimExtractContext ExtracContex = FAnimExtractContext(AtTime, bExtractRootMotion);
-	*/
-	int Num = InSequence->GetDataModel()->GetBoneAnimationTracks().Num();
 	FTransform OutTM = FTransform::Identity;
 
 	InSequence->GetBoneTransform(OutTM, 0, AtTime, false);
@@ -101,7 +97,7 @@ float UMyBlueprintFunctionLibrary::CompareAnimFramesPoseCost(const UAnimSequence
 {
 	if (InSequence && (MotionBones.Num() > 0))
 	{
-		const float Frame1Time = InSequence->GetTimeAtFrame(Frame1);
+		float Frame1Time = FMath::Clamp((float)InSequence->GetSamplingFrameRate().AsSeconds(Frame1), 0.f, InSequence->GetPlayLength());
 
 		FVector Frame1Vel;
 
@@ -118,7 +114,7 @@ float UMyBlueprintFunctionLibrary::CompareAnimFramesPoseCost(const UAnimSequence
 
 		/////////////////////////////
 
-		const float Frame2Time = InSequence->GetTimeAtFrame(Frame2);
+		float Frame2Time = FMath::Clamp((float)InSequence->GetSamplingFrameRate().AsSeconds(Frame2), 0.f, InSequence->GetPlayLength());
 
 		FVector Frame2Vel;
 
@@ -147,6 +143,3 @@ float UMyBlueprintFunctionLibrary::CompareAnimFramesPoseCost(const UAnimSequence
 	}
 	return -666.f;
 }
-
-
-

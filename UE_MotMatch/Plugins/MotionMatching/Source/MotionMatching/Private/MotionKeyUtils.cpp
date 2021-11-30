@@ -68,20 +68,13 @@ void FMotionKeyUtils::ExtractAnimTrajectory(FTrajectoryData& OutTrajectoryData, 
 		float TimeDelay = (0.1 * i);
 		
 		FTransform TrajectoryPointTM = InSequence->ExtractRootMotion(KeyTime, TimeDelay, true);
-/*	
-		FQuat TMPQuat = FQuat::Identity;
-		ExtractAnimSmoothedRotation(TMPQuat, InSequence, KeyTime);
-		TrajectoryPointTM.SetRotation(TMPQuat);
 
-		*/
 		TrajectoryPoints.Add(FTrajectoryPoint(TrajectoryPointTM, TimeDelay));
 
 	}
 	
 	OutTrajectoryData.TrajectoryPoints = TrajectoryPoints;
-	GetAnimVelocityAtTime(InSequence, KeyTime + 1.f, OutTrajectoryData.EndVel);
-	//GetAnimVelocityAtTime(InSequence, EndTime, KeyTM, OutTrajectoryData.EndVel);
-	
+	GetAnimVelocityAtTime(InSequence, KeyTime + 1.f, OutTrajectoryData.EndVel);	
 }
 
 void FMotionKeyUtils::GetAnimBoneLocalTM(const UAnimSequence * InSequence, const float AtTime, const int BoneIndex, FTransform & OutTM)
@@ -103,7 +96,6 @@ void FMotionKeyUtils::GetAnimBoneLocalTM(const UAnimSequence * InSequence, const
 		if (RefSkel.IsValidIndex(BoneIndex))
 		{
 			int CurrentIndex = BoneIndex;
-			//(RefSkel.GetParentIndex(CurrentIndex) != 0) && (
 			if (CurrentIndex == 0)
 			{
 				InSequence->GetBoneTransform(OutTM, CurrentIndex, AtTime, bUseRawData);
@@ -147,7 +139,6 @@ void FMotionKeyUtils::GetAnimBoneWorldTM(const UAnimSequence * InSequence, const
 		if (RefSkel.IsValidIndex(BoneIndex))
 		{
 			int CurrentIndex = BoneIndex;
-			//(RefSkel.GetParentIndex(CurrentIndex) != 0) && (
 			if (CurrentIndex == 0)
 			{
 				InSequence->GetBoneTransform(OutTM, CurrentIndex, AtTime, bUseRawData);
@@ -175,15 +166,13 @@ void FMotionKeyUtils::GetAnimBoneLocalVel(const UAnimSequence * InSequence, cons
 {
 	if (InSequence)
 	{
-		//const float DeltaTime = 0.03f;
-
 		FTransform BoneTM = FTransform::Identity;
 
 		GetAnimBoneLocalTM(InSequence, AtTime, BoneIndex, BoneTM);
 		FTransform PastBoneTM = FTransform::Identity;
 
 		GetAnimBoneLocalTM(InSequence, AtTime - DeltaTime, BoneIndex, PastBoneTM);
-		////Velocity
+		//Velocity
 		FVector TmpVelo = BoneTM.GetLocation() - PastBoneTM.GetLocation();
 		float UUS = TmpVelo.Size() / DeltaTime;
 		FVector Vel = TmpVelo.GetSafeNormal() * UUS;
@@ -249,8 +238,6 @@ void FMotionKeyUtils::GetAnimJointData(const UAnimSequence * InSequence, const f
 
 void FMotionKeyUtils::GetKeyPoseDataFromAnim(const UAnimSequence * InSequence, const float AtTime, const TArray<FName> KeyBones, FKeyPoseData& OutPoseData)
 {
-	
-
 	if (InSequence)
 	{
 		FReferenceSkeleton RefSkel = InSequence->GetSkeleton()->GetReferenceSkeleton();
@@ -412,21 +399,17 @@ void FMotionKeyUtils::MakeGoal(FTrajectoryData & OutGoal, const FTransform Desir
 	
 	for (int i = 0; i < 10; i++)
 	{
-		float Alpho = ((float)(i + 1)) / ((float)10);
+		float Alpha = ((float)(i + 1)) / ((float)10);
 
-		CurrentTM.Blend(RootWorldTM, DesiredTransform, Alpho);
+		CurrentTM.Blend(RootWorldTM, DesiredTransform, Alpha);
 
 		FTransform PointTM = CurrentTM;
 		//PointTM.SetTranslation(RootWorldTM.InverseTransformPosition(RootWorldTM.GetLocation() + (Dir * (TargetUUS * Alpho))));
 
-		
 		OutGoal.TrajectoryPoints.Add(FTrajectoryPoint(PointTM.GetRelativeTransform(RootWorldTM), 0.1f * i));
-
 	}
 
 	const FVector TrueDesDir = RootWorldTM.InverseTransformVectorNoScale(CurrentTM.GetRotation().GetForwardVector());
 
 	OutGoal.EndVel = TrueDesDir * TargetUUS;
-
-
 }

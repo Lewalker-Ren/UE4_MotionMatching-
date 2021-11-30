@@ -71,6 +71,4 @@ public:
 	static void MakeGoal(FTrajectoryData& OutGoal, const FTransform DesiredTransform, const float TargetUUS, const FTransform RootWorldTM);
 
 	/////////////////////////////////////////-----------------
-
-
 };

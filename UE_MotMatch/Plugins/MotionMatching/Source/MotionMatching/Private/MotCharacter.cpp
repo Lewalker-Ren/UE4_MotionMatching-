@@ -45,10 +45,8 @@ void AMotCharacter::OverrideRootMotion(const FTransform RootMotion)
 	
 	if (ChMovComp != NULL)
 	{
-
 		ChMovComp->OverridenRootMotion = RootMotion;
 		ChMovComp->OverridenRootMotion.SetScale3D(GetMesh()->GetComponentToWorld().GetScale3D());
 		ChMovComp->OverrideRootMotion = true;
-		
 	}
 }

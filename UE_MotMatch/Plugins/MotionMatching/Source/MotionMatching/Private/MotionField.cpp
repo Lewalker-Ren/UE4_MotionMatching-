@@ -32,6 +32,7 @@ void UMotionField::ResetTagHelperRanges()
 		TagHelpers[i].Ranges.SetNum(Tags.Num());
 	}
 }
+
 void UMotionField::ProcessTagHelpers()
 {
 	if (TagHelpers.Num() > 0)
@@ -153,6 +154,7 @@ void UMotionField::RemoveRangeFromTagHelper(const float RangeTime, const uint8 A
 	TagHelpers[AtAnimIdx].Ranges[AtTagIdx].RangeKeys.Remove(RangeTime);
 		
 }
+
 bool UMotionField::IsTimeTagged(const float RangeTime, const uint8 AtTagIdx, const int32 AtAnimIdx)
 {
 	return TagHelpers[AtAnimIdx].Ranges[AtTagIdx].RangeKeys.Contains(RangeTime);
